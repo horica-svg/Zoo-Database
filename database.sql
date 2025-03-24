@@ -9,8 +9,6 @@ CREATE SEQUENCE EXPONAT_SEQ START WITH 1;
 CREATE SEQUENCE HABITAT_SEQ START WITH 1;
 CREATE SEQUENCE ANGAJAT_SEQ START WITH 1;
 create sequence EXPONAT_seq start with 1;
-create sequence ISTORIC_EXPONATE_SEQ start with 1;
-create sequence ISTORIC_ANGAJAT_SEQ start with 1;
 
 CREATE TABLE GRADINA_ZOO (
     id_gradina_zoo int default GRADINA_ZOO_SEQ.nextval primary key,
@@ -51,20 +49,6 @@ VALUES (GRADINA_ZOO_SEQ.nextval, 'Grădina Zoologică Constanta', 4235.00, 'Stra
 
 INSERT INTO GRADINA_ZOO (id_gradina_zoo, nume_gradina, suprafata_gradina, adresa)
 VALUES (GRADINA_ZOO_SEQ.nextval, 'Grădina Zoologică Buzau', 2523.70, 'Strada Ceasului 2, Buzau');
-
-
-select *
-from GRADINA_ZOO
-order by id_gradina_zoo;
-
-
-CREATE TABLE INFORMATII (
-    UTILIZATOR VARCHAR2(50),
-    DATA DATE,
-    COMANDA VARCHAR2(100),
-    NR_LINII NUMBER,
-    EROARE VARCHAR2(50)
-);
 
 
 create table VIZITATOR (
@@ -110,51 +94,9 @@ values (VIZITATOR_SEQ.nextval, 'Nunez', 'Darwin', 'darwizzy@exemplu.com');
 insert into VIZITATOR (id_vizitator, nume_vizitator, prenume_vizitator, email_vizitator)
 values (VIZITATOR_SEQ.nextval, 'Clanta', 'Ionel', 'ionelclanta14@exemplu.com');
 
-CREATE TABLE ISTORIC_EXPONATE (
-    id_istoric NUMBER PRIMARY KEY,
-    id_exponat NUMBER,
-    operatiune VARCHAR2(10),
-    data_operatiune DATE,
-    vechi_nume_exponat VARCHAR2(100),
-    nou_nume_exponat VARCHAR2(100)
-);
-
-CREATE TABLE ISTORIC_ANGAJATI (
-    id_istoric NUMBER PRIMARY KEY,
-    id_angajat NUMBER,
-    operatiune VARCHAR2(10),
-    data_operatiune DATE,
-    vechi_nume_angajat VARCHAR2(100),
-    nou_nume_angajat VARCHAR2(100),
-    vechi_salariu NUMBER,
-    nou_salariu NUMBER
-);
-
-
 INSERT INTO VIZITATOR(id_vizitator, nume_vizitator, prenume_vizitator, email_vizitator)
 values (13, 'Ionescu', 'Pompiliu', '');
 
-insert into EXPONAT(id_exponat, nume_exponat, specie, id_gradina_zoo, numar_exponate, tip_exponat, id_habitat, tara_origine, greutate, tip_hrana)
-values (EXPONAT_SEQ.nextval, 'sturion', 'peste', 2, 25,'peste', 9, 'romania', 24, 'carnivor');
-
-select *
-from ISTORIC_EXPONATE
-    order by id_istoric;
-
-
-INSERT INTO EXPONAT (id_exponat, id_habitat, nume_exponat, specie, tara_origine, greutate, tip_exponat, tip_hrana, id_gradina_zoo, numar_exponate)
-VALUES (EXPONAT_SEQ.nextval, 1, 'Leu', 'Panthera leo', 'Brazilia', 320, 'mamifer', 'carnivor', 1, 3);
-
-delete from VIZITATOR
-where id_vizitator =21;
-
-select *
-from EXPONAT
-    order by ID_EXPONAT;
-
-select *
-from VIZITATOR
-    order by id_vizitator;
 
 create table EXPONAT (
     id_exponat int default EXPONAT_SEQ.nextval primary key,
@@ -209,9 +151,11 @@ VALUES (EXPONAT_seq.nextval, 4, 'Emu', 'Dromiceius Novaehollandie', 'Austrtalia'
 INSERT INTO EXPONAT (id_exponat, id_habitat, nume_exponat, specie, tara_origine, greutate, tip_exponat, tip_hrana, id_gradina_zoo, numar_exponate)
 VALUES (EXPONAT_seq.nextval, 6, 'Lebada Neagra', 'Cygnus atratus', 'Franta', 6.2, 'pasare', 'erbivor', 2, 8);
 
-select *
-from EXPONAT
-    order by id_exponat;
+insert into EXPONAT(id_exponat, nume_exponat, specie, id_gradina_zoo, numar_exponate, tip_exponat, id_habitat, tara_origine, greutate, tip_hrana)
+values (EXPONAT_SEQ.nextval, 'sturion', 'peste', 2, 25,'peste', 9, 'romania', 24, 'carnivor');
+
+INSERT INTO EXPONAT (id_exponat, id_habitat, nume_exponat, specie, tara_origine, greutate, tip_exponat, tip_hrana, id_gradina_zoo, numar_exponate)
+VALUES (EXPONAT_SEQ.nextval, 1, 'Leu', 'Panthera leo', 'Brazilia', 320, 'mamifer', 'carnivor', 1, 3);
 
 
 create table ANGAJAT (
@@ -262,9 +206,6 @@ VALUES (ANGAJAT_SEQ.nextval, 1, 'ghid', 13000, 'Ionita', 'Alexandru');
 INSERT INTO ANGAJAT (id_angajat, id_gradina_zoo, functie, salariu, nume_angajat, prenume_angajat)
 VALUES (ANGAJAT_SEQ.nextval, 6, 'ingrijitor', 45000, '', 'Andrei');
 
-select *
-from ANGAJAT
-    order by id_angajat;
 
 create table VIZITA (
     id_vizita int default VIZITA_SEQ.nextval primary key,
@@ -311,9 +252,6 @@ VALUES (VIZITA_SEQ.nextval, TO_DATE('2024-12-14', 'YYYY-MM-DD'), 8, 4);
 INSERT INTO VIZITA (id_vizita, data_vizitei, id_vizitator, id_gradina_zoo)
 VALUES (VIZITA_SEQ.nextval, TO_DATE('2024-05-14', 'YYYY-MM-DD'), 7, 2);
 
-select *
-from VIZITA
-    order by id_vizita;
 
 create table PLATA (
     id_plata int default PLATA_SEQ.nextval primary key,
@@ -357,9 +295,6 @@ values (PLATA_SEQ.nextval, 110, 'cash', 10);
 insert into PLATA (id_plata, cost, modalitate_plata, id_vizitator)
 values (PLATA_SEQ.nextval, 34.15, 'card', 11);
 
-select *
-from PLATA
-    order by id_plata;
 
 create table EVENIMENT (
     id_eveniment int default EVENIMENT_SEQ.nextval primary key,
@@ -408,9 +343,6 @@ VALUES (EVENIMENT_SEQ.nextval, TO_DATE('2024-10-01', 'YYYY-MM-DD'), 'Street food
 INSERT INTO EVENIMENT (id_eveniment, data_eveniment, nume_eveniment, id_gradina_zoo)
 VALUES (EVENIMENT_SEQ.nextval, TO_DATE('2024-10-01', 'YYYY-MM-DD'), 'Invata sa respiri', 8);
 
-select *
-from EVENIMENT
-    order by id_eveniment;
 
 create table SPONSOR (
     id_sponsor int default SPONSOR_SEQ.nextval primary key,
@@ -456,9 +388,6 @@ VALUES (SPONSOR_SEQ.nextval, 'ACS Mioveni');
 INSERT INTO SPONSOR (id_sponsor, nume_sponsor)
 VALUES (SPONSOR_SEQ.nextval, 'Daniel Sucu');
 
-select *
-from SPONSOR
-    order by id_sponsor;
 
 create table SPONSORIZARE (
     id_sponsorizare int default SPONSORIZARE_SEQ.nextval primary key,
@@ -509,9 +438,6 @@ values (SPONSORIZARE_SEQ.nextval,to_date('2022-04-12', 'YYYY-MM-DD'), 1500, 2, 1
 insert into SPONSORIZARE (id_sponsorizare, data_sponsorizare, suma_sponsorizare, id_sponsor, id_eveniment)
 values (SPONSORIZARE_SEQ.nextval,to_date('2024-08-02', 'YYYY-MM-DD'), 3500, 6, 8);
 
-select *
-from SPONSORIZARE
-    order by id_sponsorizare;
 
 create table HABITAT (
     id_habitat int default HABITAT_SEQ.nextval primary key,
@@ -567,10 +493,6 @@ VALUES (HABITAT_SEQ.nextval, 'free-range', 413);
 
 INSERT INTO HABITAT (id_habitat, tip_habitat, suprafata_habitat)
 VALUES (HABITAT_SEQ.nextval, 'free-range', 200);
-
-select *
-from HABITAT
-order by id_habitat;
 
 
 --cerea 1
